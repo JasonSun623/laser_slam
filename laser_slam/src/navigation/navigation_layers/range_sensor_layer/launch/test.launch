@@ -1,0 +1,7 @@
+<!---->
+<launch>
+
+<node name="costmap_node" pkg="costmap_2d" type="costmap_2d_node" output="log" >
+  <rosparam file="$(find range_sensor_layer)/launch/my_sonar.yaml" command="load" />
+</node>
+</launch>

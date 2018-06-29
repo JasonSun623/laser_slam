@@ -1,0 +1,33 @@
+objects_detector_chain:
+- name: people_detector
+  type: objects_detector/PeopleDetector
+  params:
+    filter: true
+#- name: smallsickbed
+#  type: objects_detector/ObjectsDetector
+#  params:
+#   cluster_threshol: 0.05
+#   num_of_ptr_threshold: 3
+#   max_detect_threshold: 4.0
+#    leg_width_lower: 0.02
+#    leg_width_upper: 0.08
+#   leggap_length_lower: 1.40
+#    leggap_length_upper: 1.60
+#   leggap_width_lower: 0.40
+#    leggap_width_upper: 0.60
+#    dot_limit: 0.4
+#   check_parallel: true
+#- name: bigsickbed
+#  type: objects_detector/ObjectsDetector
+#  params:
+#   cluster_threshol: 0.05
+#    num_of_ptr_threshold: 3
+#    max_detect_threshold: 4.0
+#    leg_width_lower: 0.15
+#    leg_width_upper: 0.35
+#   leggap_length_lower: 0.95
+#   leggap_length_upper: 1.25
+#    leggap_width_lower: 0.20
+#    leggap_width_upper: 0.40
+#    dot_limit: 0.4
+#    check_parallel: true

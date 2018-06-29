@@ -1,0 +1,6 @@
+map_update_rate: 3.0
+grid_resolution: 0.05
+range_threshold: 10.0
+publish_pose_graph: false
+max_covariance: 0.01
+transform_publish_period: 0.1

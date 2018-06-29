@@ -1,0 +1,46 @@
+<!---->
+<launch>
+
+	<!-- Some general parameters -->
+	<param name="use_sim_time" value="true" />
+	<rosparam file="$(find mr_scan_filter)/configs/ros.yaml"/>
+
+	<!-- Start Stage simulator with a given environment -->
+	<node name="Stage" pkg="stage_ros" type="stageros" args="$(find mr_scan_filter)/world/tutorial.world">
+		<param name="base_watchdog_timeout" value="0" />
+        <remap from="base_scan" to="scan"/>
+	</node>
+
+	<!-- Start the Operator to control the simulated robot -->
+	<!--<node name="Operator" pkg="nav2d_operator" type="operator" >
+		<remap from="scan" to="base_scan"/>
+		<rosparam file="$(find nav2d_tutorials)/param/operator.yaml"/>
+		<rosparam file="$(find nav2d_tutorials)/param/costmap.yaml" ns="local_map" />
+	</node>-->
+
+
+    <node pkg="robot_state_keeper" type="robot_state_keeper_node" name="robot_state_keeper">
+    </node>
+    <include file="$(find localization)/launch/localization.launch"/>
+    <node pkg="gmapping" type="slam_gmapping" name="slam_gmapping">
+		<param name="xmin" value="-4.0"/>
+		<param name="xmax" value="6.0"/>
+		<param name="ymin" value="-5.0"/>
+		<param name="ymax" value="5.0"/>
+		<param name="delta" value="0.05"/>
+		<param name="map_update_interval" value="0.5"/>
+		<!--param name="linearUpdate" value="0.02"/-->
+		<!--param name="angularUpdate" value="0.1"/-->
+		<param name="temporalUpdate" value="1.0"/>
+    </node>
+
+
+	<!-- Start Mapper to genreate map from laser scans -->
+	<!--<node name="Mapper" pkg="nav2d_karto" type="mapper">
+		<rosparam file="$(find nav2d_tutorials)/param/mapper.yaml"/>
+	</node>-->
+
+	<!-- RVIZ to view the visualization -->
+	<node name="RVIZ" pkg="rviz" type="rviz" args=" -d $(find mr_scan_filter)/configs/tutorial3.rviz" />
+
+</launch>

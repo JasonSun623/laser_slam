@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<launch>
+  <!--<include file="$(find localization)/launch/localization.launch"/>-->
+  <node name="localization" pkg="localization" type="localization">  
+    <remap from="app_pub" to="app_nav_pub" />
+    <remap from="app_sub" to="app_nav_sub" />  
+    <param name="yaml_path" value="$(find localization)/configs/localization.yaml"/>
+    <param name="amcl_yaml_path" value="$(find localization)/configs/amcl_params.yaml"/>
+    <param name="amcl_attribute_yaml_path" value="$(find localization)/configs/amcl_params_attribute.yaml"/>
+    <param name="gmapping_yaml_path" value="$(find localization)/configs/gmapping_params.yaml"/>
+    <param name="gmapping_attribute_yaml_path" value="$(find localization)/configs/gmapping_params_attribute.yaml"/>
+    <rosparam file="$(find localization)/configs/localization.yaml" command="load" />
+  </node>
+
+  <node pkg="amcl" type="amcl" name="amcl" respawn="true">
+    <rosparam file="$(find localization)/configs/amcl_params.yaml" command="load" />
+  </node>
+
+  <node pkg="gmapping" type="slam_gmapping" name="slam_gmapping">
+    <remap from="map" to="map_build"/>
+    <rosparam file="$(find localization)/configs/gmapping_params.yaml" command="load" />
+  </node>
+
+   <node name="slam_karto" pkg="nav2d_karto" type="mapper">
+    <remap from="map" to="map_build"/>
+    <rosparam file="$(find localization)/configs/karto_params.yaml" command="load" />
+  </node>
+
+  <node pkg="snap_map_icp" type="SnapMapICP" name="snap_map_icp">
+    <param name="scan_rate" value="0.2"/>
+    <param name="icp_inlier_threshold" value="0.9"/>
+    <param name="icp_change_threshold" value="0.9"/>
+  </node>
+
+    <node name="line_extractor" pkg="laser_line_extraction" type="line_extraction_node">
+    <rosparam file="$(find laser_line_extraction)/configs/laser_line_extraction.yaml" command="load" />
+  </node>
+
+  <!--<node pkg="robot_localization" type="ekf_localization_node" name="ekf_se" clear_params="true">
+    <rosparam command="load" file="$(find robot_localization)/params/ekf_template.yaml" />
+  </node>-->
+</launch>

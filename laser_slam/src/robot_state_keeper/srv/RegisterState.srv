@@ -1,0 +1,4 @@
+robot_state state
+
+---
+uint32 error_code

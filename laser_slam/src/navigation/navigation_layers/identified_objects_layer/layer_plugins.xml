@@ -1,0 +1,5 @@
+<library path="lib/libidentified_objects_layer">
+  <class type="identified_objects_layer::IdentifiedObjectsLayer" base_class_type="costmap_2d::Layer">
+    <description>A identified objects layer for costmap_2d</description>
+  </class>
+</library>

@@ -1,0 +1,7 @@
+<library path="lib/libmrobot_local_planner">
+  <class name="mrobot_local_planner/MrobotPlannerROS" type="mrobot_local_planner::MrobotPlannerROS" base_class_type="nav_core::BaseLocalPlanner">
+    <description>
+      Mrobot local planner Plugin for BaseLocalPlanner.
+    </description>
+  </class>
+</library>

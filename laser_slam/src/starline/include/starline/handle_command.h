@@ -1,0 +1,163 @@
+#ifndef HANDLE_COMMAND_H
+#define HANDLE_COMMAND_H
+#include "ros/ros.h"
+#include "std_msgs/String.h"
+#include "nav_msgs/Odometry.h"
+#include "geometry_msgs/Twist.h"
+#include "geometry_msgs/PoseStamped.h"
+#include "tf/transform_broadcaster.h"
+#include "sensor_msgs/Joy.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>   
+#include <unistd.h>     
+#include <sys/types.h>  
+#include <sys/stat.h>   
+#include <fcntl.h>      
+#include <termios.h>   
+#include <errno.h>     
+#include <sys/socket.h>
+#include <netinet/tcp.h>
+#include <arpa/inet.h>
+#include <netinet/in.h>
+#include "../include/starline/config.h"
+
+#define PKG_TRANSFORM  (0x8000)
+
+typedef enum{
+    CAMERA_X_PARAM = 0,
+    SLOW_LIMIT_PARAM,
+    STOP_LIMIT_PARAM,
+    MIN_Z_PARAM,
+    MAX_Z_PARAM,
+    OBSERVE_DIST_PARAM,
+    TOLERANCE_PASS_PARAM,
+    TOLERANCE_GOAL_PARAM,
+    MAX_MANUAL_VX_PARAM,
+    MAX_MANUAL_VTH_PARAM,
+    MAX_VX_PARAM,
+    MAX_VTH_PARAM,
+    MAX_ACC_PARAM,
+    MAX_ACCTH_PARAM,
+    DANCE_XY_RANGE_PARAM,
+    DANCE_XY_SCALE_PARAM,
+    DANCE_TH_RANGE_PARAM,
+}SET_CMD_TYPE;
+
+typedef enum{
+    PKG_SET_MODE = 0x01,
+    PKG_SET_MANUAL_VEL = 0x02,
+    PKG_ENABLE_INIT_MAP = 0x03,
+    PKG_CAL_MARK = 0x04,
+    PKG_CAL_TPOINT = 0x05,
+    PKG_CAL_GOAL = 0x06,
+    PKG_REBOOT_SYSTEM = 0x08,
+    PKG_SET_NAV_GOAL = 0x09,
+    PKG_START_DANCE = 0x0A,
+    PKG_SHUTDOWN_SYSTEM = 0x10,
+    PKG_STOP_DANCE = 0x11,
+    PKG_REQUEST_DANCE_STATUS = 0x12,
+    PKG_ASK_PREPARE_DANCE = 0x13,
+    PKG_BACK_DANCE_START_POINT = 0x14,
+    PKG_ENTER_DANCE_MODE = 0x15,
+    PKG_EXIT_DANCE_MODE = 0x16,
+    PKG_ASK_PREPARE_NAV = 0x17,
+    PKG_REQUEST_NAV_STATUS = 0x18,
+    PKG_STOP_NAV = 0x19,
+    PKG_UPDATE_DANCE_START_POINT = 0x1A,
+    PKG_SEND_MAP_INFO_BEGIN = 0x1B,
+    PKG_SEND_MAP_INFO = 0x1C,
+    PKG_SEND_MAP_INFO_END = 0x1D,
+    PKG_READ_SENSE_DATA = 0x1E,
+    PKG_READ_BASE_DATA = 0x1F,
+    PKG_READ_LED_POWER_DATA = 0x20,
+    PKG_READ_CAMERA_DATA = 0x21,
+    PKG_READ_CONTROLLER_DATA = 0x22,
+    PKG_SET_CONTROLLER_DATA = 0x23,
+    PKG_SEND_DANCE_FILE_BEGIN = 0x24,
+    PKG_SEND_DANCE_FILE = 0x25,
+    PKG_SEND_DANCE_FILE_END = 0x26,
+    PKG_DELETE_DANCE = 0x27,
+    PKG_SEND_UPGRADE_FILE_BEGIN = 0x28,
+    PKG_SEND_UPGRADE_FILE = 0x29,
+    PKG_SEND_UPGRADE_FILE_END = 0x2A,
+    PKG_READ_DEVELOP_VERSION = 0x2B,
+    PKG_CHECK_SYSTEM = 0x2C,
+    PKG_READ_OFFICIAL_VERSION = 0x2D,
+    PKG_HEART_BEAT_FB = 0x2E,
+    PKG_REBOOT_ROBOT = 0x2F,
+    PKG_RELOAD_MAP_FILES = 0x30,
+
+	PKG_REQUEST_UPGRADE = 0x0200,
+	PKG_START_UPGRADE = 0x0201,
+
+/*******feedback pkg*****************/
+    PKG_FB_MODE = 0x8001,
+    PKG_FB_REAL_VEL= 0x8002,
+    PKG_FB_INIT_MAP = 0x8003,
+    PKG_FB_CAL_MARK = 0x8004,
+    PKG_FB_CAL_TPOINT = 0x8005,
+    PKG_FB_CAL_GOAL = 0x8006,
+    PKG_FB_REPORT_ERROR = 0x8007,
+    PKG_FB_REBOOT_SYSTEM = 0x8008,
+    PKG_FB_CURRENT_GOAL = 0x8009,
+    PKG_FB_CURRENT_DANCE = 0x800A,
+    PKG_FB_SHUTDOWN = 0x8010,
+    PKG_FB_STOP_DANCE = 0x8011,
+    PKG_FB_DANCE_STATUS = 0x8012,
+    PKG_FB_PREPARE_DANCE = 0x8013,
+    PKG_FB_BACK_DANCE_START_POINT = 0x8014,
+    PKG_FB_ENTER_DANCE_MODE = 0x8015,
+    PKG_FB_EXIT_DANCE_MODE = 0x8016,
+    PKG_FB_PREPARE_NAV = 0x8017,
+    PKG_FB_NAV_STATUS = 0x8018,
+    PKG_FB_STOP_NAV = 0x8019,
+    PKG_FB_UPDATE_DANCE_START_POINT = 0x801A,
+    PKG_FB_SEND_MAP_INFO_BEGIN = 0x801B,
+    PKG_FB_SEND_MAP_INFO = 0x801C,
+    PKG_FB_SEND_MAP_INFO_END = 0x801D,
+    PKG_FB_READ_SENSE_DATA = 0x801E,
+    PKG_FB_READ_BASE_DATA = 0x801F,
+    PKG_FB_READ_LED_POWER_DATA = 0x8020,
+    PKG_FB_READ_CAMERA_DATA = 0x8021,
+    PKG_FB_READ_CONTROLLER_DATA = 0x8022,
+    PKG_FB_SET_CONTROLLER_PARAMS = 0x8023,
+    PKG_FB_SEND_DANCE_FILE_BEGIN = 0x8024,
+    PKG_FB_SEND_DANCE_FILE = 0x8025,
+    PKG_FB_SEND_DANCE_FILE_END = 0x8026,
+    PKG_FB_DELETE_DANCE = 0x8027,
+    PKG_FB_SEND_UPGRADE_FILE_BEGIN = 0x8028,
+    PKG_FB_SEND_UPGRADE_FILE = 0x8029,
+    PKG_FB_SEND_UPGRADE_FILE_END = 0x802A,
+    PKG_FB_READ_DEVELOP_VERSION = 0x802B,
+    PKG_FB_CHECK_SYSTEM = 0x802C,
+    PKG_FB_READ_OFFICIAL_VERSION = 0x802D,
+    PKG_SEND_HEART_BEAT = 0x802E,
+    PKG_FB_REBOOT_ROBOT = 0x802F,
+    PKG_FB_RELOAD_MAP_FILES = 0x8030,
+
+    PKG_FB_REQUEST_UPGRADE = 0x8200,
+    PKG_FB_START_UPGRADE = 0x8201,
+	
+    PKG_REPORT_NAV_FINISHED = 0x8300,
+    PKG_REPORT_DANCE_FINISHED = 0x8301,
+    PKG_REPORT_SHUTDOWN = 0x8302,
+
+    PKG_REPORT_AI_WORDS = 0x8340,
+}UPPER_CMD_TYPE;
+
+
+
+
+extern int send_pkg_back(unsigned short int pkg_type,system_t *sys,
+    motion_t *motion,env_t *env,int data,int type,unsigned char *str);
+extern void handle_upper_com_cmd(system_t *sys,motion_t *motion,env_t *env);
+
+
+
+
+
+#endif
+
+

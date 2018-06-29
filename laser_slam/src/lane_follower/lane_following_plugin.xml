@@ -1,0 +1,7 @@
+<library path="lib/liblane_following_planner">
+  <class name="lane_follower/LaneFollowingPlanner" type="lane_follower::LaneFollowingPlanner" base_class_type="nav_core::BaseLocalPlanner">
+    <description>
+      A implementation of a local planner that attempts to follow a plan as closely as possible.
+    </description>
+  </class>
+</library>

@@ -1,0 +1,6 @@
+<launch>
+
+
+   <node name="environment_perception" pkg="environment_perception" type="environment_perception_node.py" respawn="false" output="screen">
+   </node>
+</launch>

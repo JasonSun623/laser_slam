@@ -1,0 +1,261 @@
+[code:87]
+[msg:modify movebase recovery methods]
+
+[code:86]
+[msg:modify amcl min particles and update transform d]
+
+[code:85]
+[msg:modify the publish frequency in move_base]
+
+[code:84]
+[msg:modify mr matcher very slow move but odom to base_link don't change]
+
+[code:83]
+[msg:fix the directory bug in map_server]
+
+[code:82]
+[msg:add label detetor to support laser navigation]
+
+[code:81]
+[msg:add funtion in lane follower to stop slowly while finding final goal; adjust some parameters in lane follower]
+
+[code:80]
+[msg:modify mr matcher package's bug static but still move in a long time]
+
+[code:79]
+[msg:add open motion planner]
+
+[code:78]
+[msg:add base publish motor and controller's status]
+
+[code:77]
+[msg:add lane follower pkg]
+
+[code:76]
+[msg:add lane follower json in motion planner]
+
+[code:75]
+[msg:fix bug in laser filters]
+
+[code:74]
+[msg:modify amcl and gmapping odom parameters]
+
+[code:73]
+[msg:add clear extent check in recovery methode]
+
+[code:72]
+[msg:fix bug while map renaming]
+
+[code:71]
+[msg:add robot.sh file to robot state keeper shell docus]
+
+[code:70]
+[msg:modify mr_marcher bug:cancel new keyframe check]
+
+[code:69]
+[msg:add robot state keeper connection check publish log output]
+
+[code:68]
+[msg:modify amcl save pose rate to 1.0]
+
+[code:67]
+[msg:modify the way to generate point id]
+
+[code:66]
+[msg:add split launch files.]
+
+[code:65]
+[msg:fix bug to delete virtual wall.]
+
+[code:64]
+[msg:setup restart robot to repeat 20 times if no ack comes, while the thread in led sleeps 20s.]
+
+[code:63]
+[msg: change a parameter which can let robot stop when it has passed the goal when navigation]
+
+[code:62]
+[msg: add virtual layer]
+
+[code:61]
+[msg: modify reomte upgrade downlad code]
+
+[code:60]
+[msg: add break after case in starline, add sleep time after write to power com]
+
+[code:59]
+[msg: modify robot state keeper beacon frequency to 0.2Hz]
+
+[code:58]
+[msg: add new protocol in starline, which changes the base to save power mode by charging]
+
+[code:57]
+[msg: change a parameter in mr_match. add init of two parameters in starline. change cache space in app_pub and app_sub in map_server]
+
+[code:56]
+[msg: add new protocol in starline in order to read power percent]
+
+[code:55]
+[msg: fix bug by reporting of charging status in auto charging node]
+
+[code:54]
+[msg: modify current pose info type in amcl node]
+
+[code:53]
+[msg: add virtual wall in costmap module, complement a protocol in auto charging]
+
+[code:52]
+[msg: modify map_server json messages, add virtual wall IO]
+
+[code:51]
+[msg: modify current pose info type, add twist info]
+
+[code:50]
+[msg: auto charging node support new protocol， add order cancel charging action]
+
+[code:49]
+[msg: modify motion planner config file bug and add get costmap update pause status]
+
+[code:48]
+[msg: modify mr matcher odom jump count bug]
+
+[code:47]
+[msg: modify laser range to 1.75,move base and mr_matcher error limit to 2.0]
+
+[code:46]
+[msg: modify cmd_vel info format with  twiststamped]
+
+[code:45]
+[msg: modify poser remote upgrade download flag]
+
+[code:44]
+[msg: modify upgrade sh]
+
+[code:43]
+[msg: modify remote upgrade files are empty after reboot]
+
+[code:42]
+[msg: add turnarount pri vel in yaml]
+
+[code:41]
+[msg: modify set initial pose after create map]
+
+[code: 40]
+[msg: modify mr_matcher odom_scale param]
+
+[code: 39]
+[msg: modify mr_matcher and modify combine_sick.launch]
+
+[code: 38]
+[msg: add robot_state_keeper package beacon send function for someone else detect robot]
+
+[code: 37]
+[msg: add mr_matcher package]
+
+[code:36]
+[msg: modify set initial pose after create map]
+
+[code:35]
+[msg: fix bug in auto charging module]
+
+[code:34]
+[msg: modify motion_planner bug of send same goal point,and feedback reached msg with latest goal info]
+
+[code:33]
+[msg: add a large place simulate gmapping environment]
+
+[code:32]
+[msg: set gammping param maxurange and maxrange in initial]
+
+[code:31]
+[msg: add set initial pose after create map]
+
+[code:30]
+[msg:distinguish error codes in map server and auto charging auto. fix a bug in map server to forbidden delete current map after rename current scene]
+
+[code:29]
+[msg:fix a bug in map server by add point]
+
+[code:28]
+[msg:correct the msg in map server and auto charging node]
+
+[code:27]
+[msg: remove joy and rviz in combine_sick.launch]
+
+[code:26]
+[msg: modify navigation remote upgrade support]
+
+[code:25]
+[msg:when cancel navigation task,resume pause flag]
+
+[code:24]
+[msg:fix some bug in map server, optimize code in map server]
+
+[code: 23]
+[msg:repair bug during compiling by auto charging node, besides add a header file for it. move forward distance increased from 30cm to 40cm.]
+
+[code: 22]
+[msg: modify gmapping param for update slow]
+
+[code: 21]
+[msg: modify version publish shell and version]
+
+[code: 20]
+[msg: add upgrade.sh & version_pub.sh]
+
+[code: 19]
+[msg: modify odom to baselink tf switch in starline]
+
+[code: 18]
+[msg: remove info print in starline]
+
+[code: 17]
+[msg: add navigation remote upgrade support]
+
+[code: 16]
+[msg:fix bug:reporting error when check system state of camera]
+
+[code: 15]
+[msg:add version info to parameter server in robot state keeper, and get it in starline. remove NULL == double type in sensor.cpp]
+
+[code: 14]
+[msg: report goal info when app requesting  motion status]
+
+[code: 13]
+[msg: fix bug in auto charging node cpp]
+
+[code: 12]
+[msg: modify sensor set and get distance function]
+
+[code: 11]
+[msg: change the strategy from asynchronization to synchronization by saving map]
+
+[code: 10]
+[msg: add version info]
+
+[code: 9]
+[msg: add velocity_damper node in launch]
+
+[code: 8]
+[msg: optimize gmapping param, include particles & iterations & minimumScore]
+
+[code: 7]
+[msg: change the move_base package config path to support get and set configure parameters]
+
+[code: 6]
+[msg: add an example scene in map_server maps, add velocity damper node]
+
+[code: 5]
+[msg: modify sensor set and get distance function and fix some bug in handle_command bug]
+
+[code: 4]
+[msg: modify map_server. Fix the bug of renaming the map or scene ]
+
+[code: 3]
+[msg: add commond to set localization param and get params, include amcl and gmapping module ]
+
+code: 2]
+[msg: modify motion_planner and move_base package,move_base package add a service to support change the config yamls.
+app could get and set parameters through /app_pub topic ]
+
+[code: 1]
+[msg: create the file]

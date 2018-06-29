@@ -1,0 +1,87 @@
+<!-- 
+  Simulate a differential drive robot with the teb_local_planner in stage:
+  - stage
+  - map_server
+  - move_base
+  - static map
+  - amcl
+  - rviz view
+ -->
+<launch>
+    <!--  ************** Global Parameters ***************  -->
+    <param name="/use_sim_time" value="true"/>
+	<include file="$(find localization)/launch/localization.launch"/>
+
+        <!--  ************** Stage Simulator ***************  -->
+	<node pkg="stage_ros" type="stageros" name="stageros" args="$(find teb_local_planner_tutorials)/stage/cookyplus_simulate.world">
+		<remap from="base_scan" to="scan"/>
+  	</node>
+
+        <!--  ************** Navigation ***************  -->
+	<node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+		<rosparam file="$(find teb_local_planner_tutorials)/cfg/cookyplus_simulate/costmap_common_params.yaml" command="load" ns="global_costmap" />
+		<rosparam file="$(find teb_local_planner_tutorials)/cfg/cookyplus_simulate/costmap_common_params.yaml" command="load" ns="local_costmap" />
+		<rosparam file="$(find teb_local_planner_tutorials)/cfg/cookyplus_simulate/moverlocal.yaml" command="load" />
+		<rosparam file="$(find teb_local_planner_tutorials)/cfg/cookyplus_simulate/moverglobal.yaml" command="load" />
+		<rosparam file="$(find teb_local_planner_tutorials)/cfg/cookyplus_simulate/moverlocalplanner.yaml" command="load" />
+
+		<rosparam file="$(find teb_local_planner_tutorials)/cfg/cookyplus_simulate/costmap_converter_params.yaml" command="load" />
+	</node>
+
+    <node pkg="base_cmdvel_mux" type="base_cmdvel_mux" name="base_cmdvel_mux">
+		<remap from="mannual_pri_cmdvel" to="/android_joystick_cmd_vel"/>
+		<param name="BaseCmdvelMuxCfgPath" value="$(find base_cmdvel_mux)/configs/BaseCmdvelMuxCfg.yaml"/>
+    </node>
+
+    <node pkg="motion_planner" type="motion_planner_node" name="motion_planner">
+		<param name="config_file_path" value="$(find motion_planner)/configs/config.yaml"/>
+    </node>
+
+	<!--  ****** Maps *****  -->
+	<node name="map_server" pkg="map_server" type="map_server" args="$(find teb_local_planner_tutorials)/maps/maze.yaml" output="screen">
+		<param name="frame_id" value="/map"/>
+	</node>
+
+	<node pkg="amcl" type="amcl" name="amcl" output="screen">
+		<param name="odom_model_type" value="diff"/>
+		<param name="odom_alpha5" value="0.1"/>
+		<param name="transform_tolerance" value="0.1" />
+		<param name="gui_publish_rate" value="1.0"/>
+		<param name="laser_max_beams" value="60"/>
+		<param name="min_particles" value="100"/>
+		<param name="max_particles" value="5000"/>
+		<param name="kld_err" value="0.05"/>
+		<param name="kld_z" value="0.99"/>
+		<param name="odom_alpha1" value="0.2"/>
+		<param name="odom_alpha2" value="0.2"/>
+		<!-- translation std dev, m -->
+		<param name="odom_alpha3" value="0.2"/>
+		<param name="odom_alpha4" value="0.2"/>
+		<param name="laser_z_hit" value="0.8"/>
+		<param name="laser_z_short" value="0.05"/>
+		<param name="laser_z_max" value="0.05"/>
+		<param name="laser_z_rand" value="0.2"/>
+		<param name="laser_sigma_hit" value="0.2"/>
+		<param name="laser_lambda_short" value="0.1"/>
+		<param name="laser_lambda_short" value="0.1"/>
+		<param name="laser_model_type" value="likelihood_field"/>
+		<!-- <param name="laser_model_type" value="beam"/> -->
+		<param name="laser_likelihood_max_dist" value="2.0"/>
+		<param name="use_map_topic" value="false"/>
+		<param name="update_min_d" value="0.2"/>
+		<param name="update_min_a" value="0.5"/>
+		<param name="odom_frame_id" value="odom"/>
+		<param name="resample_interval" value="2"/>
+		<param name="recovery_alpha_slow" value="0.0"/>
+		<param name="recovery_alpha_fast" value="0.0"/>
+		<param name="recovery_alpha_slow" value="0.0"/>
+		<param name="recovery_alpha_fast" value="0.0"/>
+		<param name="initial_pose_x" value="2"/>
+		<param name="initial_pose_y" value="2"/>
+		<param name="initial_pose_a" value="0"/>
+	</node>
+
+	<!--  **************** Visualisation ****************  -->
+	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find teb_local_planner_tutorials)/cfg/rviz_navigation.rviz"/>
+
+</launch>

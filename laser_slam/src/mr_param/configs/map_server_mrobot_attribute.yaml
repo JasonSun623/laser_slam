@@ -1,0 +1,1 @@
+- {name: auto_label_save, type: bool, default: false}

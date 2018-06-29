@@ -1,0 +1,9 @@
+image: F001.pgm
+occupied_thresh: 0.65
+negate: 0
+origin:
+  - -4.000000
+  - -17.000000
+  - 0.000000
+free_thresh: 0.196
+resolution: 0.025000

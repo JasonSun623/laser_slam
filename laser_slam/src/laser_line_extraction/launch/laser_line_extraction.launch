@@ -1,0 +1,6 @@
+<launch>
+  <node name="line_extractor" pkg="laser_line_extraction" type="line_extraction_node">
+    <rosparam file="$(find laser_line_extraction)/configs/laser_line_extraction.yaml" command="load" />
+  </node>
+</launch>
+

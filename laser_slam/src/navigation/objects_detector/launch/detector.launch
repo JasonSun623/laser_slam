@@ -1,0 +1,6 @@
+ <launch>  
+
+ <node pkg="objects_detector" type="detector_chain" name="objects_detector" >
+      <rosparam command="load" file="$(find objects_detector)/launch/detectors.yaml" />
+    </node>
+</launch>

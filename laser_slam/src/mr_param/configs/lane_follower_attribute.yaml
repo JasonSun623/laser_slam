@@ -1,0 +1,2 @@
+- {name: max_stop_dist, type: double, default: 0.25}
+- {name: camera_goal_toloranz, type: double, default: 0.17}

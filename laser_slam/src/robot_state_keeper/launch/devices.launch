@@ -1,0 +1,158 @@
+<?xml version="1.0"?>
+<launch>
+  <node name="sick_tim561" pkg="sick_tim" type="sick_tim551_2050001" respawn="true">
+    <!-- default values: -->
+    
+    <param name="min_ang" type="double" value="-1.75" />
+    <param name="max_ang" type="double" value="1.75" />
+    <param name="intensity" type="bool" value="True" />
+    <param name="range_max" type="double" value="10.0" />
+
+    <!-- Uncomment this to enable TCP instead of USB connection; 'hostname' is the host name or IP address of the laser scanner
+         In cases where a race condition exists and the computer boots up before the TIM is ready, increase 'timelimit.'-->
+    <param name="hostname" type="string" value="192.168.3.45" />
+    <param name="port" type="string" value="2112" />
+    <param name="timelimit" type="int" value="5" />
+  </node>
+
+    <node pkg="tf" type="static_transform_publisher" name="laser_static_tf_publisher" args="0.53 0.0
+          0 0 0 0 1 base_link laser 100">
+    </node>  
+
+    <node pkg="tf" type="static_transform_publisher" name="cam_static_tf_publisher" args="0.26 0.0
+          0.0 0.0 0.06 -0.02 base_link usb_cam_up 100">
+    </node>
+
+
+    <!--head sonar tf-->
+    <node pkg="tf" type="static_transform_publisher" name="sonar0_static_tf_publisher" args="0.565 -0.085 0.0 -0.5 0.0 0.0 base_link sonar_frame_0 100">
+    </node>
+    <node pkg="tf" type="static_transform_publisher" name="sonar1_static_tf_publisher" args="0.565 0.085 0.0 0.5 0.0 0.0 base_link sonar_frame_1 100">
+    </node>
+    <node pkg="tf" type="static_transform_publisher" name="sonar10_static_tf_publisher" args="0.53 -0.17 0.1 -0.9 0.0 0.0 base_link sonar_frame_10 100">
+    </node>
+    <node pkg="tf" type="static_transform_publisher" name="sonar11_static_tf_publisher" args="0.53 0.17 0.1 0.9 0.0 0.0 base_link sonar_frame_11 100">
+    </node>
+    <node pkg="tf" type="static_transform_publisher" name="sonar12_static_tf_publisher" args="0.58 0.0 0.2 0.0 0.0 0.0 base_link sonar_frame_12 100">
+    </node>
+    <node pkg="tf" type="static_transform_publisher" name="sonar13_static_tf_publisher" args="0.58 0.0 0.4 0.0 0.0 0.0 base_link sonar_frame_13 100">
+    </node>
+    
+
+    <!--left sonar tf-->
+    <node pkg="tf" type="static_transform_publisher" name="sonar2_static_tf_publisher" args="0.274 0.25 0.0 1.57 0.0 0.0 base_link sonar_frame_2 100">
+    </node>
+    <node pkg="tf" type="static_transform_publisher" name="sonar3_static_tf_publisher" args="-0.20 0.25 0.0 1.57 0.0 0.0 base_link sonar_frame_3 100">
+    </node>
+    <node pkg="tf" type="static_transform_publisher" name="sonar4_static_tf_publisher" args="-0.4 0.25 0.0 1.57 0.0 0.0 base_link sonar_frame_4 100">
+    </node>
+
+    <!--back sonar tf-->
+    <node pkg="tf" type="static_transform_publisher" name="sonar5_static_tf_publisher" args="-0.538 0.099 0.0 3.14 0.0 0.0 base_link sonar_frame_5 100">
+    </node>
+    <node pkg="tf" type="static_transform_publisher" name="sonar6_static_tf_publisher" args="-0.538 -0.099 0.0 3.14 0.0 0.0 base_link sonar_frame_6 100">
+    </node>
+
+    <!--right sonar tf-->
+    <node pkg="tf" type="static_transform_publisher" name="sonar7_static_tf_publisher" args="-0.4 -0.25 0.0 -1.57 0.0 0.0 base_link sonar_frame_7 100">
+    </node>
+    <node pkg="tf" type="static_transform_publisher" name="sonar8_static_tf_publisher" args="-0.20 -0.25 0.0 -1.57 0.0 0.0 base_link sonar_frame_8 100">
+    </node>
+    <node pkg="tf" type="static_transform_publisher" name="sonar9_static_tf_publisher" args="0.274 -0.25 0.0 -1.57 0.0 0.0 base_link sonar_frame_9 100">
+    </node>
+
+
+
+    <!--right microLaser tf-->
+    <node pkg="tf" type="static_transform_publisher" name="mircolaser0_static_tf_publisher" args="0.29 -0.24 0.0 -1.57 0.0 0.0 base_link laser_frame_0 100">
+    </node>
+    <node pkg="tf" type="static_transform_publisher" name="mircolaser1_static_tf_publisher" args="-0.15 -0.24 0.0 -1.57 0.0 0.0 base_link laser_frame_1 100">
+    </node>
+    <node pkg="tf" type="static_transform_publisher" name="mircolaser2_static_tf_publisher" args="-0.45 -0.24 0.0 -1.57 0.0 0.0 base_link laser_frame_2 100">
+    </node>
+
+    <!--left microLaser tf-->
+    <node pkg="tf" type="static_transform_publisher" name="mircolaser3_static_tf_publisher" args="0.29 0.24 0.0 1.57 0.0 0.0 base_link laser_frame_3 100">
+    </node>
+    <node pkg="tf" type="static_transform_publisher" name="mircolaser4_static_tf_publisher" args="-0.15 0.24 0.0 1.57 0.0 0.0 base_link laser_frame_4 100">
+    </node>
+    <node pkg="tf" type="static_transform_publisher" name="mircolaser5_static_tf_publisher" args="-0.45 0.24 0.0 1.57 0.0 0.0 base_link laser_frame_5 100">
+    </node>
+    <!--back microLaser tf-->
+    <node pkg="tf" type="static_transform_publisher" name="mircolaser6_static_tf_publisher" args="-0.5 -0.21 0.0 3.14 0.0 0.0 base_link laser_frame_6 100">
+    </node>
+    <node pkg="tf" type="static_transform_publisher" name="mircolaser7_static_tf_publisher" args="-0.5 -0.08 0.0 3.14 0.0 0.0 base_link laser_frame_7 100">
+    </node>
+    <node pkg="tf" type="static_transform_publisher" name="mircolaser8_static_tf_publisher" args="-0.5 0.08 0.0 3.14 0.0 0.0 base_link laser_frame_8 100">
+    </node>
+    <node pkg="tf" type="static_transform_publisher" name="mircolaser9_static_tf_publisher" args="-0.5 0.21 0.0 3.14 0.0 0.0 base_link laser_frame_9 100">
+    </node>
+
+    <!--back top microLaser tf-->
+    <!--
+    <node pkg="tf" type="static_transform_publisher" name="mircolaser10_static_tf_publisher" args="0.2 -0.15 0.0 3.14 0.0 0.0 base_link laser_frame_10 100">
+    </node>
+    <node pkg="tf" type="static_transform_publisher" name="mircolaser11_static_tf_publisher" args="0.2 0.0 0.0 3.14 0.0 0.0 base_link laser_frame_11 100">
+    </node>
+    <node pkg="tf" type="static_transform_publisher" name="mircolaser12_static_tf_publisher" args="0.2 0.15 0.0 3.14 0.0 0.0 base_link laser_frame_12 100">
+    </node>
+    -->
+
+
+    <!--<node pkg="tf" type="static_transform_publisher" name="cam_static_tf_publisher" args="0.26 0.0
+          0 0 0.06 -0.02 1 base_link usb_cam_up 100">
+    </node>-->
+
+  <!--<node pkg="starline" type="starline" name="base">
+
+    <rosparam file="$(find starline)/config/starline.yaml" command="load"/>
+    <remap from="cur_post" to="odom"/>
+    <param name="pub_base_tf" value="0"/>
+  </node>-->
+
+  <!--<node pkg="imu" type="imu" name="imu" output="screen">
+        <rosparam file="$(find imu)/config/imu.yaml" command="load"/>
+  </node>-->
+  
+  <include file="$(find robot_state_keeper)/launch/mytuyang.launch"/>
+
+  <node name="scan_filter" pkg="laser_filters" type="scan_to_scan_filter_chain" respawn="true">
+    <rosparam>
+       scan_filter_chain:
+       - name: laser_median_filter
+         type: laser_filters/LaserArrayFilter
+         params: 
+           range_filter_chain:
+             - name: median_5
+               type: MultiChannelMedianFilterFloat 
+               params:
+                 number_of_observations: 5
+                 unused: 10
+           intensity_filter_chain:
+             - name: median_5
+               type: MultiChannelMedianFilterFloat 
+               params:
+                 number_of_observations: 5
+                 unused: 10
+       - name: radius_filter
+         type: laser_filters/LaserRadiusFilter
+         params:
+               lower_threshold: 0.0
+               upper_threshold: 3.5
+               radius: 0.06
+               min_neighbors: 1
+               shift_points: 5
+    </rosparam>
+  </node>
+
+  <node pkg="mr_matcher" type="mr_matcher_node" name="mr_matcher_node">
+    <remap from="vel" to="cmd_vel"/> 
+    <param name="odom_scale" value="1.0"/>
+    <!--<param name="publish_tf" value="false"/>-->
+  </node>
+
+  <!--<node pkg="base_cmdvel_mux" type="base_cmdvel_mux" name="base_cmdvel_mux">
+    <remap from="mannual_pri_cmdvel" to="/android_joystick_cmd_vel"/>
+    <param name="BaseCmdvelMuxCfgPath" value="$(find base_cmdvel_mux)/configs/BaseCmdvelMuxCfg.yaml"/>
+  </node>-->
+</launch>

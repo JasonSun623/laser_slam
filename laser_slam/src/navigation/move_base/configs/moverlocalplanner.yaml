@@ -1,0 +1,70 @@
+controller_frequency: 10.0
+planner_frequency: 0.0
+planner_patience: 4.0
+controller_patience: 2.0
+max_planning_retries: 3
+#conservative_reset_dist: 2.0
+sim_time: 3.0
+TrajectoryPlannerROS:
+  latch_xy_goal_tolerance: true
+  max_vel_x: 0.5
+  min_vel_x: 0.05
+  min_vel_theta: -0.5
+  max_vel_theta: 0.5
+  max_rotational_vel: 0.5
+  min_in_place_rotational_vel: 0.2
+  #min_in_place_vel_theta: 0.2
+  acc_lim_th: 1.2
+  acc_lim_x: 0.6
+  acc_lim_y: 0.0
+
+  holonomic_robot: false
+  path_distance_bias: 0.6
+  goal_distance_bias: 0.8
+  pdist_scale: 0.6
+  gdist_scale: 0.8
+  occdist_scale: 0.05
+  vtheta_samples: 20
+  vx_samples: 5
+  yaw_goal_tolerance: 0.1
+  xy_goal_tolerance: 0.15
+  #publish_cost_grid_pc: true
+  heading_lookahead: 0.35
+  heading_scoring: false
+  oscillation_reset_dist: 0.2
+  escape_reset_dist: 0.15
+  escape_reset_theta: 0.8
+  #dwa: true
+  sim_time: 2.0
+
+NavfnROS:
+  visualize_potential: false
+conservative_reset_enable: true
+conservative_reset:
+  reset_distance: 1.0
+  layer_names: [obstacle_layer,rgbd_layer]
+
+aggressive_reset:
+  reset_distance: 0.0
+  layer_names: [obstacle_layer,rgbd_layer]
+extent_reset_enable: false
+10m_extent_reset:
+  reset_distance: 0.0
+  clear_global_width: 10.0
+  clear_global_height: 10.0
+  layer_names: [obstacle_layer,rgbd_layer]
+20m_extent_reset:
+  reset_distance: 0.0
+  clear_global_width: 20.0
+  clear_global_height: 20.0
+  layer_names: [obstacle_layer,rgbd_layer]
+30m_extent_reset:
+  reset_distance: 0.0
+  clear_global_width: 30.0
+  clear_global_height: 30.0
+  layer_names: [obstacle_layer,rgbd_layer]
+
+#GlobalPlanner:
+  #use_dijkstra: false
+  #use_grid_path: false
+  #visualize_potential: true

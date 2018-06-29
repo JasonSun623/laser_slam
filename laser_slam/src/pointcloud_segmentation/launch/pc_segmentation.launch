@@ -1,0 +1,7 @@
+<launch>
+	<master auto="start"/>
+	<node pkg="tf" type="static_transform_publisher" name="base_to_rgbd_broadcaster" args="0 0 0.91 0 0.346277778 0 base_link camera_link 100" />
+	
+	<node pkg="pointcloud_segmentation" type="ObstaclePointsPub" name="ObstaclePointsPub" />
+        <node name="rviz" pkg="rviz" type="rviz" args="-d $(find pointcloud_segmentation)/pointcloud_segmentation.rviz" />
+</launch>

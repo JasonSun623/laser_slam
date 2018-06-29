@@ -1,0 +1,70 @@
+cmake_minimum_required(VERSION 2.8.3)
+project(starline)
+
+find_package(catkin REQUIRED COMPONENTS
+                    roscpp
+                    std_msgs
+                    rospy
+                    geometry_msgs
+                    nav_msgs
+                    tf
+                    sensor_msgs
+					message_generation
+)
+
+add_message_files(
+    DIRECTORY msg
+    FILES
+	  SensorMsg.msg
+)
+set (CMAKE_CXX_FLAGS "-std=c++11")
+include_directories(
+  include ${catkin_INCLUDE_DIRS}
+)
+
+generate_messages(
+    DEPENDENCIES
+        std_msgs
+)
+
+catkin_package(
+    INCLUDE_DIRS
+        include
+#    LIBRARIES
+#        map_server_image_loader
+    CATKIN_DEPENDS
+        roscpp
+	message_runtime
+)
+
+add_executable(starline src/main.cpp src/readfile.cpp src/system.cpp src/sensors.cpp 
+                        src/upper_com.cpp src/handle_command.cpp src/move.cpp src/uart.cpp 
+                        src/led.cpp src/upgrade.cpp src/md5.cpp src/report.cpp src/navigation.cpp 
+                        src/cloud.cpp src/cJSON.cpp
+)
+
+add_dependencies(starline 
+  ${${PROJECT_NAME}_EXPORTED_TARGETS} 
+  ${catkin_EXPORTED_TARGETS}
+)
+
+target_link_libraries(starline
+  ${catkin_LIBRARIES}
+  curl
+)
+
+install(DIRECTORY cfgfile
+   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+ )
+
+install(TARGETS starline
+  ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+
+## Install project namespaced headers
+install(DIRECTORY include/${PROJECT_NAME}/
+  DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
+  FILES_MATCHING PATTERN "*.h"
+  PATTERN ".svn" EXCLUDE)
+

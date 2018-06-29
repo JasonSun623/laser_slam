@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<launch>
+	<node pkg="auto_charging_node" type="auto_charging_node" name="auto_charging_node" />
+	<node pkg="auto_charging_node" type="charging_driver" name="charging_driver" args = "/dev/ros/charger" />
+</launch>

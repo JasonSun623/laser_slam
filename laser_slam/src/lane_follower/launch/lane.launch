@@ -1,0 +1,20 @@
+<launch>
+  <master auto="start"/>
+  <node pkg="motion_planner" type="motion_planner_node" name="motion_planner">
+    <remap from="app_pub" to="app_nav_pub" />
+    <remap from="app_sub" to="app_nav_sub" />
+    <param name="config_file_path" value="$(find motion_planner)/configs/config.yaml"/>
+  </node>
+
+ <node pkg="lane_follower" type="laser_tf_publisher_node" name="laser_tf_publisher"/>
+  <node pkg="lane_follower" type="lane_follower_node" respawn="true" name="lane_follower_node" output="screen">
+    <remap from="scan" to="scan_filtered"/>
+    <remap from="odom" to="current_pose"/>
+    <remap from="cmd_vel" to="elevator_pri_cmdvel"/>
+	<remap from="camera" to="/lane_follower_node/lane_msg"/>
+    <rosparam file="$(find lane_follower)/configs/costmap_common_params.yaml" command="load" ns="controller_costmap" />
+    <rosparam file="$(find lane_follower)/configs/controller_costmap_params.yaml" command="load" />
+    <rosparam file="$(find lane_follower)/configs/lane_following_planner_params.yaml" command="load" />
+  </node>
+</launch>
+

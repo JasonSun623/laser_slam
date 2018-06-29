@@ -1,0 +1,27 @@
+
+<launch>
+  <master auto="start"/>
+  <group ns="usb_cam_0">
+      <node name="usb_cam" pkg="usb_cam" type="usb_cam_node" respawn="true" output="screen" >
+    		<param name="video_device" value="/dev/video0" />
+    		<param name="image_width" value="640" />
+    		<param name="image_height" value="480" />
+    		<param name="pixel_format" value="yuyv" />
+    		<param name="camera_frame_id" value="usb_cam" />
+    		<param name="io_method" value="mmap"/>
+  	   </node>
+  </group>
+
+  <group ns="usb_cam_1">
+       <node name="usb_cam" pkg="usb_cam" type="usb_cam_node" respawn="true" output="screen" >
+    		<param name="video_device" value="/dev/video1" />
+    		<param name="image_width" value="640" />
+    		<param name="image_height" value="480" />
+    		<param name="pixel_format" value="yuyv" />
+    		<param name="camera_frame_id" value="usb_cam" />
+    		<param name="io_method" value="mmap"/>
+  		</node>
+  </group>
+
+	<node name="lane_detector_node" pkg="lane_detector" type="lane_detector_node.py" 		respawn="true" output="screen"/>
+</launch>

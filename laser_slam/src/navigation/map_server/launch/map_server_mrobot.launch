@@ -1,0 +1,13 @@
+<launch>
+
+	    <node pkg="tf" type="static_transform_publisher" name="map_static_tf_publisher" args="0.0 9.0 0.0 0.0 0.0 0.0 base_link map 100">
+	</node>-
+<!--<node pkg="map_serve" type="map_server_mrobot" name="map_server_mrobot" args="/home/enigma/catkin_ws/src/navigation/map_server/maps/ 0" />-->
+
+        
+	<node pkg="map_server" type="map_server_mrobot" name="map_server_mrobot" args="$(find map_server)/maps/ 0" >
+		<param name="step" value="0.05" type="double" />
+		<param name="auto_label_localization" value="true" type="bool" />
+		<param name="auto_label_save" value="true" type="bool" />
+	</node>
+</launch>

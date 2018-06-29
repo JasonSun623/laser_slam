@@ -1,0 +1,7 @@
+<launch>
+    <node name="mr_param_node" pkg="mr_param" type="mr_param_node">
+        <remap from="app_pub" to="app_nav_pub" />
+        <remap from="app_sub" to="app_nav_sub" />  
+        <param name="config_path" value="$(find mr_param)/configs/"/>
+    </node>
+</launch>

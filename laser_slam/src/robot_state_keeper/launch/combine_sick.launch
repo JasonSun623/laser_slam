@@ -1,0 +1,137 @@
+<?xml version="1.0"?>
+<launch>
+    <!--<include file="$(find sick_tim)/launch/sick_tim571.launch"/>-->
+    <include file="$(find localization)/launch/localization.launch"/>
+    <node name="sick_tim561" pkg="sick_tim" type="sick_tim551_2050001" respawn="true" output="screen">
+    <!-- default values: -->
+    
+        <param name="min_ang" type="double" value="-1.75" />
+        <param name="max_ang" type="double" value="1.75" />
+        <param name="intensity" type="bool" value="True" />
+   <!--   <param name="skip" type="int" value="0" />
+      <param name="frame_id" type="str" value="laser" />
+      <param name="time_offset" type="double" value="-0.001" />
+      <param name="publish_datagram" type="bool" value="False" />
+      <param name="subscribe_datagram" type="bool" value="false" />
+      <param name="device_number" type="int" value="0" />
+      <param name="range_min" type="double" value="0.05" />
+    -->
+        <param name="range_max" type="double" value="10.0" />
+
+        <!-- Older versions of the scanner firmware report an incorrect time_increment.
+         If you get a warning about time_increment, uncomment this. -->
+        <!-- Uncomment this to enable TCP instead of USB connection; 'hostname' is the host name or IP address of the laser scanner
+        In cases where a race condition exists and the computer boots up before the TIM is ready, increase 'timelimit.'-->
+        <param name="hostname" type="string" value="192.168.3.45" />
+        <param name="port" type="string" value="2112" />
+        <param name="timelimit" type="int" value="5" />
+    </node>
+
+    <node pkg="tf" type="static_transform_publisher" name="laser_static_tf_publisher" args="0.52 0.0
+          0 0 0 0 1 base_link laser 200">
+    </node>  
+ <!--	<node pkg="tf" type="static_transform_publisher" name="cam_static_tf_publisher" args="-0.163 0.0
+          0 0 0 0 1 base_link usb_cam 200">
+    </node> 
+ -->  
+ <!--
+    <include file="$(find openni2_launch)/launch/openni2.launch" />
+    <node pkg="tf" type="static_transform_publisher" name="rgbd_static_tf_publisher" args="0 0 1.14 0.0 0.22 -0.05 base_link camera_link 100">
+    </node>
+    <node pkg="pointcloud_segmentation" type="ObstaclePointsPub" name="obstaclesegment">
+    </node>
+-->
+
+    <node pkg="base_cmdvel_mux" type="base_cmdvel_mux" name="base_cmdvel_mux">
+    <remap from="mannual_pri_cmdvel" to="/android_joystick_cmd_vel"/>
+    <param name="BaseCmdvelMuxCfgPath" value="$(find base_cmdvel_mux)/configs/BaseCmdvelMuxCfg.yaml"/>
+    </node>
+
+    <node pkg="starline" type="starline" name="base">
+    <remap from="cur_post" to="odom"/>
+    <param name="pub_base_tf" value="0"/>
+    </node>
+ <!--
+    <node pkg="joy" type="joy_node" name="joystick">
+    </node>
+
+    <node pkg="rviz" type="rviz" name="myrviz">
+    </node>
+-->
+    <node pkg="motion_planner" type="motion_planner_node" name="motion_planner">
+        <param name="config_file_path" value="$(find motion_planner)/configs/config.yaml"/>
+    </node>
+    
+    <node pkg="robot_state_keeper" type="robot_state_keeper_node" name="robot_state_keeper">
+    </node>
+
+    <master auto="start"/>
+
+
+    <!-- Run AMCL -->
+    <node pkg="amcl" type="amcl" name="amcl" output="screen">
+	    <rosparam file="$(find localization)/configs/amcl_params.yaml" command="load" />
+	</node>
+
+    <node pkg="gmapping" type="slam_gmapping" name="slam_gmapping">
+		<remap from="map" to="map_build"/>
+        <rosparam file="$(find localization)/configs/gmapping_params.yaml" command="load" />
+    </node>
+
+    <node pkg="move_base" type="move_base" respawn="true" name="move_base" output="screen">
+		<rosparam file="$(find move_base)/configs/costmap_common_params.yaml" command ="load" ns="global_costmap" />
+		<rosparam file="$(find move_base)/configs/costmap_common_params.yaml" command="load"
+	ns="local_costmap" />
+		<rosparam file="$(find move_base)/configs/moverlocal.yaml" command="load" />
+		<rosparam file="$(find move_base)/configs/moverglobal.yaml" command="load" />
+		<rosparam file="$(find move_base)/configs/moverlocalplanner.yaml" command="load" />
+		<param name="config_file_path" value="$(find move_base)/configs/"/>
+    </node>
+
+  
+    <node pkg="map_server" type="map_server_mrobot" name="map_server_mrobot" args="$(find map_server)/maps/ 0">
+		<param name="auto_label_localization" value="true" type="bool" />
+		<param name="auto_label_save" value="false" type="bool" />
+        		<param name="reset_label_duration" value="240" type="double" />
+		<param name="distance_threshold" value="10" type="double" />
+      		<param name="angle_threshold" value="1.7" type="double" />	
+	</node>
+
+    <node name="scan_filter" pkg="laser_filters" type="scan_to_scan_filter_chain">
+        <rosparam>
+            scan_filter_chain:
+            - name: laser_median_filter
+              type: laser_filters/LaserArrayFilter
+              params: 
+                range_filter_chain:
+                  - name: median_5
+                    type: MultiChannelMedianFilterFloat 
+                    params:
+                      number_of_observations: 5
+                      unused: 10
+                intensity_filter_chain:
+                  - name: median_5
+                    type: MultiChannelMedianFilterFloat 
+                    params:
+                      number_of_observations: 5
+                      unused: 10
+            - name: radius_filter
+              type: laser_filters/LaserRadiusFilter
+              params:
+                    lower_threshold: 0.0
+                    upper_threshold: 3.5
+                    radius: 0.06
+                    min_neighbors: 1
+                    shift_points: 5
+        </rosparam>
+    </node>
+<!--
+    <node pkg="auto_charging_node" type="auto_charging_node" name="auto_charging_node" />
+    <node pkg="auto_charging_node" type="charging_driver" name="charging_driver" args = "/dev/ros/charger" />
+-->
+	<node pkg="velocity_damper" type="velocity_damper_node" name="velocity_damper_node"/>
+
+    <node pkg="mr_matcher" type="mr_matcher_node" name="mr_matcher_node" output="screen">
+        <remap from="vel" to="cmd_vel"/>
+    </node>
+</launch>

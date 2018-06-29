@@ -1,0 +1,4 @@
+max_x_vel: 0.1
+max_th_vel: 1.0
+max_y_vel: 0.0
+default_planner: move_base

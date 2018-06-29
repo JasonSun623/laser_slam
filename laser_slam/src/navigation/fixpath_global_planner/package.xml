@@ -1,0 +1,40 @@
+<package>
+    <name>fixpath_global_planner</name>
+    <version>1.12.13</version>
+    <description>
+        fixpath_global_planner
+
+    </description>
+    <author>vayne.gao</author>
+    <maintainer email="vayne.gao@mrobot.cn">vayne.gao</maintainer>
+    <license>BSD</license>
+    <url>http://wiki.ros.org/fixpath_global_planner</url>
+
+    <buildtool_depend version_gte="0.5.68">catkin</buildtool_depend>
+
+    <build_depend>cmake_modules</build_depend>
+    <build_depend>costmap_2d</build_depend>
+    <build_depend>geometry_msgs</build_depend>
+    <build_depend>nav_core</build_depend>
+    <build_depend>nav_msgs</build_depend>
+    <build_depend>netpbm</build_depend> <!-- This is a test dependency -->
+    <build_depend>pluginlib</build_depend>
+    <build_depend>rosconsole</build_depend>
+    <build_depend>roscpp</build_depend>
+    <build_depend>map_server</build_depend>
+    <build_depend>std_msgs</build_depend>
+
+    <run_depend>costmap_2d</run_depend>
+    <run_depend>geometry_msgs</run_depend>
+    <run_depend>nav_core</run_depend>
+    <run_depend>nav_msgs</run_depend>
+    <run_depend>pluginlib</run_depend>
+    <run_depend>rosconsole</run_depend>
+    <run_depend>roscpp</run_depend>
+    <run_depend>map_server</run_depend>
+    <run_depend>std_msgs</run_depend>
+
+<export>
+    <nav_core plugin="${prefix}/fixpath_global_planner.xml" />
+</export>
+</package>

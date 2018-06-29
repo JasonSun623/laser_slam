@@ -1,0 +1,11 @@
+<launch>
+     <node name="localization" pkg="localization" type="localization">
+         <param name="yaml_path" value="$(find localization)/configs/localization.yaml"/>
+         <param name="amcl_yaml_path" value="$(find localization)/configs/amcl_params.yaml"/>
+         <param name="amcl_attribute_yaml_path" value="$(find localization)/configs/amcl_params_attribute.yaml"/>
+         <param name="gmapping_yaml_path" value="$(find localization)/configs/gmapping_params.yaml"/>
+         <param name="gmapping_attribute_yaml_path" value="$(find localization)/configs/gmapping_params_attribute.yaml"/>
+         <param name="uwb_yaml_path" value="$(find localization)/configs/uwb_params.yaml"/>
+         <param name="uwb_attribute_yaml_path" value="$(find localization)/configs/uwb_params_attribute.yaml"/>
+     </node>
+</launch>

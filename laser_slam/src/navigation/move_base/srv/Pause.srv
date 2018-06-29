@@ -1,0 +1,4 @@
+bool pause
+
+---
+uint32 error_code

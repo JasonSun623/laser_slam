@@ -1,0 +1,7 @@
+<library path="lib/libfixpath_global_planner">
+  <class name="fixpath_global_planner/FixpathGlobalPlanner" type="fixpath_global_planner::FixpathGlobalPlanner" base_class_type="nav_core::BaseGlobalPlanner">
+    <description>
+      A implementation of a grid based planner using Dijkstra
+    </description>
+  </class>
+</library>

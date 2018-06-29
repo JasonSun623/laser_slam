@@ -1,0 +1,4 @@
+string scene_name
+string map_name
+---
+uint32 error_code

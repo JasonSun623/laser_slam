@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<launch>
+  <node pkg="map_server" type="map_server_mrobot" name="map_server_mrobot" args="$(find map_server)/maps/ 0" >
+    <remap from="app_pub" to="app_nav_pub" />
+    <remap from="app_sub" to="app_nav_sub" />
+    <rosparam file="$(find mr_param)/configs/map_server_mrobot.yaml" command="load" />
+	<param name="auto_label_localization" value="true" type="bool" />
+	<param name="reset_label_duration" value="20.0" type="double" />
+	<param name="distance_threshold_max" value="10" type="double" />
+	<param name="angle_threshold_max" value="1.7" type="double" />
+	<param name="distance_threshold_min" value="0.2" type="double" />
+	<param name="angle_threshold_min" value="0.18" type="double" />
+	<param name="label_initial_pose_covx" value="0.09" type="double" />
+	<param name="label_initial_pose_covy" value="0.09" type="double" />
+	<param name="label_initial_pose_covth" value="0.0685" type="double" />
+  </node>
+
+  <node pkg="convert" type="service.py" name="convertImage" >
+  </node>
+
+  <node pkg="initial_localization" type="initial_localization_node" name="initial_localization_node" >
+  </node>
+<!--  The nodes below was intergated in map server   
+  <node pkg="region_params_changer" type="region_params_changer_node" name="region_params_changer" args="$(find map_server)/maps/"/>
+  <node pkg="fixpath_ctrl" type="fixpath_ctrl" name="fixpath_controller">
+    <param name="maps_path" value="$(find map_server)/maps/"/>
+  </node> 
+-->
+</launch>

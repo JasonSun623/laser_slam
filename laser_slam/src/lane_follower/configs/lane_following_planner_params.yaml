@@ -1,0 +1,35 @@
+image_width: 160
+image_height: 120
+footprint_padding: 0.01
+controller_frequency: 10.0
+max_wait_time: 20.0
+max_turn_right: 0.65
+max_turn_left: 0.5
+max_stop_dist: 0.25
+LaneFollowingPlanner:
+  tolerance_trans: 0.02
+  tolerance_rot: 0.04
+  tolerance_timeout: 0.5
+  holonomic: false
+  samples: 10
+  forward_collision_dist: 0.12
+  backward_collision_dist: 0.30
+  forward_max_vel_lin: 0.25
+  backward_max_vel_lin: 0.25
+  max_vel_th: 0.1
+  min_vel_lin: 0.05
+  min_vel_th: 0.0
+  acc_vx: 0.4
+  acc_vth: 0.5
+  r_threshold: 0.55
+  min_in_place_vel_th: 0.1
+  in_place_trans_vel: 0.0
+  k_ratio_heading_and_dist: 1.5 #1.5
+  k_path: 1 #6
+  lambda: 2 #2
+  beta: 1.5 #0.4
+  turn_in_place_first: false
+  max_heading_diff_before_moving: 0.17
+  control_frequency: 10
+  xy_goal_tolerance: 0.08
+  yaw_goal_tolerance: 0.05

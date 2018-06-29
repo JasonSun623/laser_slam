@@ -1,0 +1,17 @@
+<library path="lib/librange_sensor_layer">
+  <class type="range_sensor_layer::RangeSensorLayer" base_class_type="costmap_2d::Layer">
+    <description>A range-sensor (sonar, IR) based obstacle layer for costmap_2d</description>
+  </class>
+</library>
+
+<library path="lib/libsonar_sensor_layer">
+  <class type="range_sensor_layer::SonarSensorLayer" base_class_type="costmap_2d::Layer">
+    <description>A sonar-sensor (sonar, IR) based obstacle layer for costmap_2d</description>
+  </class>
+</library>
+
+<library path="lib/libpoint_sensor_layer">
+  <class type="range_sensor_layer::PointTimeSensorLayer" base_class_type="costmap_2d::Layer">
+    <description>A point laser time (sonar, IR) based obstacle layer for costmap_2d</description>
+  </class>
+</library>

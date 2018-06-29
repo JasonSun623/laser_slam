@@ -1,0 +1,5 @@
+<launch>
+    <node pkg="service_desk" type="service_desk.py" name="service_desk" output="screen">
+        <rosparam file="$(find service_desk)/config/service_desk.yaml" command="load" />
+    </node>
+</launch>

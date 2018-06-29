@@ -1,0 +1,11 @@
+- {name: update_rate, type: double, min: 1.0,max: 30.0, default: 20.0}
+- {name: max_offset_with_currentpose, type: double, min: 0, max: 10.0, default: 2.5}
+- {name: is_use_uwb, type: bool, min: , max: , default: false}
+- {name: max_diff_range_self, type: double, min: 0, max: 10.0, default: 0.1}
+- {name: timer_max_offset, type: double, min: 0, max: 10.0, default: 0.1}
+- {name: timer_duration, type: double, min: 0, max: 10.0, default: 2.0}
+- {name: is_use_map, type: bool, min: , max: , default: true}
+- {name: update_min_distance, type: double, min: 1.0, max: 10.0, default: 2.5}
+- {name: cov_x, type: double, min: 0.0, max: 10.0, default: 0.04}
+- {name: cov_y, type: double, min: 0.0, max: 10.0, default: 0.04}
+- {name: cov_th, type: double, min: 0.0, max: 10.0, default: 0.68}

@@ -1,0 +1,60 @@
+cmake_minimum_required(VERSION 2.8.3)
+project(objects_detector)
+
+set(THIS_PACKAGE_ROS_DEPS sensor_msgs roscpp tf filters message_filters
+  pluginlib costmap_2d geometry_msgs)
+find_package(catkin REQUIRED COMPONENTS
+  ${THIS_PACKAGE_ROS_DEPS}
+)
+
+find_package(Boost REQUIRED COMPONENTS system)
+
+
+
+
+
+catkin_package(
+INCLUDE_DIRS include
+LIBRARIES objects_detectors
+CATKIN_DEPENDS ${THIS_PACKAGE_ROS_DEPS}
+)
+
+include_directories(
+  include
+  ${catkin_INCLUDE_DIRS}
+)
+
+
+add_library(objects_detectors 
+			src/objects_detector.cpp 
+			src/people_detector.cpp
+			#src/objects_detector_plugins.cpp			
+			)
+target_link_libraries(objects_detectors
+  ${catkin_LIBRARIES} ${Boost_LIBRARIES}
+  json_linux-gcc-4.8_libmt.so
+)
+
+add_executable(detector_chain src/detector_chain.cpp)
+
+target_link_libraries(detector_chain
+  ${catkin_LIBRARIES}
+)
+
+
+
+install(TARGETS objects_detectors detector_chain
+  ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
+
+# Install headers
+install(DIRECTORY include/${PROJECT_NAME}/
+  DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION})
+
+install(FILES object_detector_plugins.xml
+    DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+)
+
+

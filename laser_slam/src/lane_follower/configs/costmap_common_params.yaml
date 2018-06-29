@@ -1,0 +1,45 @@
+#Set the tolerance we're willing to have for tf transforms
+transform_tolerance: 0.3
+
+#Obstacle marking parameters
+obstacle_range: 1.5
+raytrace_range: 2.5
+
+#The footprint of the robot and associated padding
+footprint_enable: true
+footprint: [[0.57,0.15],[0.57, -0.15],[0.42,-0.265],[-0.60,-0.265],[-0.6,0.265],[0.42,0.265]]
+#footprint: [[-0.59, -0.285],[-0.59, 0.285],[0.40, 0.285],[0.60, 0.0],[0.40, -0.285]]
+footprint_padding: 0.01
+#robot_radius: 0.68
+#Cost function parameters
+#inflation_radius: 0.01
+cost_scaling_factor: 1.0
+
+#The cost at which a cell is considered an obstacle when a map is read from the map_server
+lethal_cost_threshold: 100 
+
+#Configuration for the sensors that the costmap will use to update a map
+#observation_sources: scan obst
+#scan: {data_type: LaserScan, topic: scan, marking: true, clearing: true ,inf_is_valid: true}
+#obst: {data_type: PointCloud2, topic: lasercloud, observation_persistence: 0.25, marking: true, clearing: true}
+
+
+obstacle_layer: 
+  combination_method: 1
+  observation_sources: scan 
+  scan: 
+     sensor_frame: laser
+     data_type: LaserScan
+     topic: scan_filtered
+     marking: true
+     clearing: true 
+     inf_is_valid: true
+
+inflation_layer:
+  enabled: true
+  inflation_radius: 0.025
+
+sonar_layer:
+  topics: ["/sonar_msg"]
+  no_readings_timeout: 0.0
+

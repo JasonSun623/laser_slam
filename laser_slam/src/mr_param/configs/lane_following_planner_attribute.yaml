@@ -1,0 +1,4 @@
+- {name: forward_collision_dist, type: double, default: 0.12}
+- {name: backward_collision_dist, type: double, default: 0.20}
+- {name: forward_max_vel_lin, type: double, default: 0.25}
+- {name: backward_max_vel_lin, type: double, default: 0.25}

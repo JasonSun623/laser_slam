@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<launch>
+  <node pkg="robot_state_keeper" type="robot_state_keeper_node" name="robot_state_keeper">
+    <remap from="app_pub" to="app_nav_pub" />
+    <remap from="app_sub" to="app_nav_sub" />
+  </node>
+
+  <node pkg="trans_topic" type="trans_topic_node" name="trans_topic">
+  </node>
+  
+  <node name="mr_param_node" pkg="mr_param" type="mr_param_node">
+    <remap from="app_pub" to="app_nav_pub" />
+    <remap from="app_sub" to="app_nav_sub" />  
+    <param name="config_path" value="$(find mr_param)/configs/"/>
+  </node>
+
+  <node pkg="service_desk" type="service_desk.py" name="service_desk" output="screen">
+        <rosparam file="$(find service_desk)/config/service_desk.yaml" command="load" />
+  </node>
+  
+</launch>

@@ -1,0 +1,12 @@
+map_module: gmapping,karto
+module: amcl,gmapping,karto
+default_module: amcl
+map_use: karto
+nav_use: amcl
+nav_module: amcl
+cov_x_1: 0.25
+cov_y_1: 0.25
+cov_th_1: 0.068
+cov_x_2: 1
+cov_y_2: 1
+cov_th_2: 0.25

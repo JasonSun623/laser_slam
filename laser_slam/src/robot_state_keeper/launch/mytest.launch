@@ -1,0 +1,7 @@
+<!-- Entry point for using OpenNI2 devices -->
+<launch>
+  <node pkg="tf" type="static_transform_publisher" name="cam_static_tf_publisher" args="0.26 0.0
+          0.0 0.0 -0.1 -0.5 base_link usb_cam_up 100">
+    </node>
+
+</launch>

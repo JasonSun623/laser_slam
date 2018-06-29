@@ -1,0 +1,14 @@
+global_costmap:
+  global_frame: /map
+  robot_base_frame: /base_link
+  update_frequency: 0.01
+  static_map: true
+  virtual_layer: true
+  global_wall: true
+  #save_debug_pgm: true
+  unknown_cost_value: 205
+  publish_frequency: 0.5
+  inflation_radius: 1.0
+  cost_scaling_factor: 4
+  forbidden_radius: 0.35
+  obstacle_layer: { combination_method: 1}

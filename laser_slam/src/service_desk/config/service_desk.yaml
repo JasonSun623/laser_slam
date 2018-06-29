@@ -1,0 +1,7 @@
+
+
+rosbag_record_common: -a -x "/(.*)cam(.*)/(.*)"
+
+rosbag_record_custom: -a
+
+rosbag_record_map_build: /tf /scan /odom /odometry/filtered

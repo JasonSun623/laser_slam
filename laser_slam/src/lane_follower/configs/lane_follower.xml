@@ -1,0 +1,48 @@
+<launch>
+<!--
+   <param name="/use_sim_time" value="true"/>
+
+  Example move_base configuration. Descriptions of parameters, as well as a full list of all amcl parameters, can be found at http://www.ros.org/wiki/move_base.
+-->
+  <group ns="usb_cam_0">
+      <node name="usb_cam" pkg="usb_cam" type="usb_cam_node" output="screen" >
+    		<param name="video_device" value="/dev/video0" />
+    		<param name="image_width" value="640" />
+    		<param name="image_height" value="480" />
+    		<param name="pixel_format" value="yuyv" />
+    		<param name="camera_frame_id" value="usb_cam" />
+    		<param name="io_method" value="mmap"/>
+  	   </node>
+  </group>
+
+  <group ns="usb_cam_1">
+       <node name="usb_cam" pkg="usb_cam" type="usb_cam_node" output="screen" >
+    		<param name="video_device" value="/dev/video1" />
+    		<param name="image_width" value="640" />
+    		<param name="image_height" value="480" />
+    		<param name="pixel_format" value="yuyv" />
+    		<param name="camera_frame_id" value="usb_cam" />
+    		<param name="io_method" value="mmap"/>
+  		</node>
+  </group>
+<!--
+-->
+  <node name="lane_detector_node" pkg="lane_detector" type="lane_detector_node.py" respawn="true" output="screen"/>
+  <node pkg="lane_follower" type="lane_follower_node" respawn="true" name="lane_follower_node" output="screen">
+    <remap from="scan" to="scan_filtered"/>
+    <remap from="odom" to="current_pose"/>
+    <remap from="cmd_vel" to="elevator_pri_cmdvel"/>
+	<remap from="camera" to="/lane_follower_node/lane_msg"/>
+    <param name="image_width" value="320" />
+    <param name="image_height" value="240" />
+    <param name="footprint_padding" value="0.01" />
+    <param name="controller_frequency" value="10.0" />
+    <param name="max_wait_time" value="20.0" />
+    <rosparam file="$(find lane_follower)/configs/costmap_common_params.yaml" command="load" ns="controller_costmap" />
+    <rosparam file="$(find lane_follower)/configs/controller_costmap_params.yaml" command="load" />
+    <rosparam file="$(find lane_follower)/configs/lane_following_planner_params.yaml" command="load" />
+    <!--
+    <rosparam file="$(find navigation_stage)/move_base_config/dwa_local_planner_params.yaml" command="load" />
+    -->
+  </node>
+</launch>

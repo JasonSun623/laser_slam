@@ -1,0 +1,16 @@
+<class_libraries>
+ <library path="lib/libobjects_detectors">
+  <class name="objects_detector/PeopleDetector" type="objects_detector::PeopleDetector" 
+   base_class_type="filters::FilterBase<sensor_msgs::LaserScan>">
+   <description>
+    DEPRECATED: Remove points from the pointcloud inside the robot base. 
+   </description>
+  </class>
+  <class name="objects_detector/ObjectsDetector" type="objects_detector::ObjectsDetector" 
+   base_class_type="filters::FilterBase<sensor_msgs::LaserScan>">
+   <description>
+    DEPRECATED: Remove points from the pointcloud inside the robot base. 
+   </description>
+  </class>
+ </library>
+</class_libraries>

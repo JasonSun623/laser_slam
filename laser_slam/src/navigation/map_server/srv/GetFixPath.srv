@@ -1,0 +1,9 @@
+uint32 path_id
+uint32 path_type
+string path_map_name
+string path_scene_name
+---
+
+uint8 path_found
+string error_message
+geometry_msgs/PoseStamped[] path

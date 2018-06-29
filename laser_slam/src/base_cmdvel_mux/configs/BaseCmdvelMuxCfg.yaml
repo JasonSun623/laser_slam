@@ -1,0 +1,7 @@
+- {name: estop_pri_cmdvel,priority: 100,state_time: 1.0}
+- {name: sstop_pri_cmdvel,priority: 110,state_time: 1.0}
+- {name: mannual_pri_cmdvel,priority: 200,state_time: 1.0}
+- {name: turnaround_pri_cmdvel,priority: 205,state_time: 1.0}
+- {name: nav_pri_cmdvel,priority: 210,state_time: 1.0}
+- {name: charge_pri_cmdvel,priority: 220,state_time: 1.0}
+- {name: elevator_pri_cmdvel,priority: 230,state_time: 1.0}

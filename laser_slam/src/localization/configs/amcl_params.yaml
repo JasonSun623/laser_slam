@@ -1,0 +1,5 @@
+use_range_weight: true
+bad_laser_check: false
+bad_laser_range_min: 0.3
+bad_laser_range_max: 10.0
+bad_laser_range_rate: 0.6

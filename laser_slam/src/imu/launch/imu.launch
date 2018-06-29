@@ -1,0 +1,5 @@
+<launch>
+    <node pkg="imu" type="imu" name="imu" output="screen">
+        <rosparam file="$(find imu)/config/imu.yaml" command="load"/>
+    </node>
+</launch>

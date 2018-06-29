@@ -1,0 +1,43 @@
+<!---->
+<launch>
+  <master auto="start"/>
+  <group ns="usb_cam_0">
+      <node name="usb_cam" pkg="usb_cam" type="usb_cam_node" respawn="true">
+    		<param name="video_device" value="/dev/noah/front_navi_cam" />
+    		<param name="image_width" value="640" />
+    		<param name="image_height" value="480" />
+    		<param name="pixel_format" value="yuyv" />
+    		<param name="camera_frame_id" value="usb_cam" />
+    		<param name="io_method" value="mmap"/>
+  	   </node>
+  </group>
+
+  <group ns="usb_cam_1">
+       <node name="usb_cam" pkg="usb_cam" type="usb_cam_node" respawn="true">
+    		<param name="video_device" value="/dev/noah/back_navi_cam" />
+    		<param name="image_width" value="640" />
+    		<param name="image_height" value="480" />
+    		<param name="pixel_format" value="yuyv" />
+    		<param name="camera_frame_id" value="usb_cam" />
+    		<param name="io_method" value="mmap"/>
+  		</node>
+  </group>
+
+ <node name="lane_detector_node" pkg="lane_detector" type="lane_detector_node.py" respawn="true"/>
+
+ <node pkg="lane_follower" type="lane_follower_node" respawn="true" name="lane_follower_node">
+    <remap from="scan" to="scan_filtered"/>
+    <!--<remap from="odom" to="current_pose"/>-->
+    <remap from="cmd_vel" to="elevator_pri_cmdvel"/>
+    <remap from="camera" to="/lane_follower_node/lane_msg"/>
+    <rosparam file="$(find lane_follower)/configs/costmap_common_params.yaml" command="load" ns="controller_costmap" />
+    <rosparam file="$(find lane_follower)/configs/controller_costmap_params.yaml" command="load" />
+    <rosparam file="$(find mr_param)/configs/lane_follower.yaml" command="load" />
+    <rosparam file="$(find mr_param)/configs/lane_following_planner.yaml" command="load" ns="LaneFollowingPlanner" />
+    <!--
+    <node pkg="lane_follower" type="laser_tf_publisher_node" name="laser_tf_publisher"/>
+    <rosparam file="$(find navigation_stage)/move_base_config/dwa_local_planner_params.yaml" command="load" />
+    -->
+  </node>
+</launch>
+
